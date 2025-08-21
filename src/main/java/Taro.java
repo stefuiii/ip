@@ -41,7 +41,10 @@ public class Taro {
                     System.out.println("  " + (i + 1) + ". " + toDoList.get(i));
                 }
                 System.out.println(LINE);
-            } else if (input.startsWith("mark ") || input.startsWith("unmark ")) {
+            }
+
+            if (input.startsWith("mark ") || input.startsWith("unmark ")) {
+                // input mark/unmark as a specific format to change status of task
                 String[] parts = input.split("\\s+");
                 int idx = Integer.parseInt(parts[1]); // 1-based
                 Task t = toDoList.get(idx - 1);
