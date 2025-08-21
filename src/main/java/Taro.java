@@ -23,7 +23,7 @@ public class Taro {
 
         ArrayList<Task> toDoList = new ArrayList<>();
 
-        while (true) {
+        while (sc.hasNextLine()) {
             String input = sc.nextLine();
 
             // input 'bye' to exit
@@ -68,9 +68,10 @@ public class Taro {
                 String desc = input.length() > 4 ? input.substring(4).trim() : "";
                 Task t = new Todo(desc);
                 toDoList.add(t);
-                System.out.println("Got it. I've added this task:");
-                System.out.println("  " + t);
-                System.out.println("Now you have " + toDoList.size() + " tasks in the list.");
+                System.out.println(LINE);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + t);
+                System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                 System.out.println(LINE);
             } else if (input.startsWith("deadline")) {
                 String body = input.length() > 8 ? input.substring(8).trim() : "";
