@@ -37,6 +37,7 @@ public class Taro {
             // input 'list' to list down all tasks
             if (input.equals("list")){
                 System.out.println(LINE);
+                System.out.println("  Here are tasks in your list:");
                 for (int i = 0; i < toDoList.size(); i++) {
                     System.out.println("  " + (i + 1) + ". " + toDoList.get(i));
                 }
@@ -61,11 +62,15 @@ public class Taro {
                     System.out.println("   " + t);
                     System.out.println(LINE);
                 }
-            } else {
-                System.out.println(LINE);
-                System.out.println(input);
-                System.out.println(LINE);
-                toDoList.add(new Task(input));
+            }
+
+            if (input.startsWith("todo")) {
+                String desc = input.length() > 4 ? input.substring(4).trim() : "";
+                Task t = new Todo(desc);
+                toDoList.add(t);
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + t);
+                System.out.println("Now you have " + toDoList.size() + " tasks in the list.");
             }
 
         }
