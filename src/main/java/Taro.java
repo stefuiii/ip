@@ -84,6 +84,20 @@ public class Taro {
                 System.out.println("   " + t);
                 System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                 System.out.println(LINE);
+            } else if (input.startsWith("event")) {
+                String body = input.length() > 5 ? input.substring(5).trim() : "";
+                int fromPos = body.indexOf("/from");
+                int toPos   = body.indexOf("/to");
+                String desc = body.substring(0, fromPos).trim();
+                String from = body.substring(fromPos + 5, toPos).trim();
+                String to   = body.substring(toPos + 3).trim();
+                Task t = new Event(desc, from, to);
+                toDoList.add(t);
+                System.out.println(LINE);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + t);
+                System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
+                System.out.println(LINE);
             }
 
         }
