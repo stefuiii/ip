@@ -42,6 +42,7 @@ public class Taro {
                     System.out.println("  " + (i + 1) + ". " + toDoList.get(i));
                 }
                 System.out.println(LINE);
+                continue;
             }
 
             if (input.startsWith("mark ") || input.startsWith("unmark ")) {
@@ -55,14 +56,30 @@ public class Taro {
                     System.out.println(" Nice! I've marked this task as done:");
                     System.out.println("   " + t);
                     System.out.println(LINE);
+                    continue;
                 } else {
                     t.markAsUndone();
                     System.out.println(LINE);
                     System.out.println(" OK, I've marked this task as not done yet:");
                     System.out.println("   " + t);
                     System.out.println(LINE);
+                    continue;
                 }
+            } else if (input.startsWith("delete")) {
+                String[] parts = input.split("\\s+");
+                int idx = Integer.parseInt(parts[1]); // 1-based
+
+                Task removed = toDoList.remove(idx - 1);
+
+                System.out.println(LINE);
+                System.out.println(" Noted. I've removed this task:");
+                System.out.println("   " + removed);
+                System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
+                System.out.println(LINE);
+                continue;
             }
+
+
             try {
                 if (input.startsWith("todo")) {
                     String desc = input.length() > 4 ? input.substring(4).trim() : "";
