@@ -21,29 +21,50 @@ public class Taro {
         System.out.println("What I can do for you?");
         System.out.println(LINE);
 
-        ArrayList<String> toDoList = new ArrayList<>();
+        ArrayList<Task> toDoList = new ArrayList<>();
 
         while (true) {
             String input = sc.nextLine();
-            Task tk = new Task(input);
 
+            // input 'bye' to exit
             if ("bye".equals(input.trim())) {
                 System.out.println(LINE);
                 System.out.println("Bye. Hope to see you again soon!");
                 System.out.println(LINE);
                 break;
-            } else if (input.equals("list")){
+            }
+
+            // input 'list' to list down all tasks
+            if (input.equals("list")){
                 System.out.println(LINE);
                 for (int i = 0; i < toDoList.size(); i++) {
-                    System.out.println((i + 1) + ". " + toDoList.get(i));
+                    System.out.println("  " + (i + 1) + ". " + toDoList.get(i));
                 }
                 System.out.println(LINE);
+            } else if (input.startsWith("mark ") || input.startsWith("unmark ")) {
+                String[] parts = input.split("\\s+");
+                int idx = Integer.parseInt(parts[1]); // 1-based
+                Task t = toDoList.get(idx - 1);
+                if (input.startsWith("mark ")) {
+                    t.markAsDone();
+                    System.out.println(LINE);
+                    System.out.println(" Nice! I've marked this task as done:");
+                    System.out.println("   " + t);
+                    System.out.println(LINE);
+                } else {
+                    t.markAsUndone();
+                    System.out.println(LINE);
+                    System.out.println(" OK, I've marked this task as not done yet:");
+                    System.out.println("   " + t);
+                    System.out.println(LINE);
+                }
             } else {
                 System.out.println(LINE);
                 System.out.println(input);
                 System.out.println(LINE);
-                toDoList.add(input);
+                toDoList.add(new Task(input));
             }
+
         }
 
         sc.close();
