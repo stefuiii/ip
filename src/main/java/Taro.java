@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+
 public class Taro {
     private static final String Logo =
             "  /^ ^\\\n" +
@@ -24,6 +25,7 @@ public class Taro {
 
         while (true) {
             String input = sc.nextLine();
+            Task tk = new Task(input);
 
             if ("bye".equals(input.trim())) {
                 System.out.println(LINE);
