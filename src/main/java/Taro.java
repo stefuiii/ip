@@ -63,41 +63,74 @@ public class Taro {
                     System.out.println(LINE);
                 }
             }
+            try {
+                if (input.startsWith("todo")) {
+                    String desc = input.length() > 4 ? input.substring(4).trim() : "";
+                    if (desc.isEmpty()) {
+                        throw new TaroException("Oops! No description of your todo. Plz re-add your todo with decription!");
+                    }
+                    Task t = new Todo(desc);
+                    toDoList.add(t);
+                    System.out.println(LINE);
+                    System.out.println(" Got it. I've added this task:");
+                    System.out.println("   " + t);
+                    System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
+                    System.out.println(LINE);
+                } else if (input.startsWith("deadline")) {
+                    String body = input.length() > 8 ? input.substring(8).trim() : "";
+                    if (body.isEmpty()) {
+                        throw new TaroException("A deadline needs a description and '/by <when>'.");
+                    }
 
-            if (input.startsWith("todo")) {
-                String desc = input.length() > 4 ? input.substring(4).trim() : "";
-                Task t = new Todo(desc);
-                toDoList.add(t);
+                    int byPos = body.indexOf("/by");
+                    String desc = body.substring(0, byPos).trim();
+                    String by = body.substring(byPos + 3).trim();
+
+                    if (desc.isEmpty()) {
+                        throw new TaroException("The description of a deadline cannot be empty. ");
+                    }
+                    if (by.isEmpty()) {
+                        throw new TaroException("The '/by' part of deadline timing is incomplete. Plz provide a complete timing");
+                    }
+                    Task t = new Deadline(desc, by);
+                    toDoList.add(t);
+                    System.out.println(LINE);
+                    System.out.println(" Got it. I've added this task:");
+                    System.out.println("   " + t);
+                    System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
+                    System.out.println(LINE);
+                } else if (input.startsWith("event")) {
+                    String body = input.length() > 5 ? input.substring(5).trim() : "";
+                    if (body.isEmpty()) {
+                        throw new TaroException("An event needs a description and '/from <start>' '/to <end>'.");
+                    }
+                    int fromPos = body.indexOf("/from");
+                    int toPos = body.indexOf("/to");
+
+                    if (fromPos == -1) {
+                        throw new TaroException("Missing '/from'. Usage: event <desc> /from <start> /to <end>");
+                    }
+                    if (toPos == -1) {
+                        throw new TaroException("Missing '/to'. Usage: event <desc> /from <start> /to <end>");
+                    }
+                    if (toPos < fromPos) {
+                        throw new TaroException("'/to' must come after '/from'. Usage: event <desc> /from <start> /to <end>");
+                    }
+
+                    String desc = body.substring(0, fromPos).trim();
+                    String from = body.substring(fromPos + 5, toPos).trim();
+                    String to = body.substring(toPos + 3).trim();
+                    Task t = new Event(desc, from, to);
+                    toDoList.add(t);
+                    System.out.println(LINE);
+                    System.out.println(" Got it. I've added this task:");
+                    System.out.println("   " + t);
+                    System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
+                    System.out.println(LINE);
+                }
+            } catch (TaroException e) {
                 System.out.println(LINE);
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + t);
-                System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
-                System.out.println(LINE);
-            } else if (input.startsWith("deadline")) {
-                String body = input.length() > 8 ? input.substring(8).trim() : "";
-                int byPos = body.indexOf("/by");
-                String desc = body.substring(0, byPos).trim();
-                String by   = body.substring(byPos + 3).trim(); // after "/by"
-                Task t = new Deadline(desc, by);
-                toDoList.add(t);
-                System.out.println(LINE);
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + t);
-                System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
-                System.out.println(LINE);
-            } else if (input.startsWith("event")) {
-                String body = input.length() > 5 ? input.substring(5).trim() : "";
-                int fromPos = body.indexOf("/from");
-                int toPos   = body.indexOf("/to");
-                String desc = body.substring(0, fromPos).trim();
-                String from = body.substring(fromPos + 5, toPos).trim();
-                String to   = body.substring(toPos + 3).trim();
-                Task t = new Event(desc, from, to);
-                toDoList.add(t);
-                System.out.println(LINE);
-                System.out.println(" Got it. I've added this task:");
-                System.out.println("   " + t);
-                System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
+                System.out.println("    " + e.getMessage());
                 System.out.println(LINE);
             }
 
