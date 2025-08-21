@@ -71,6 +71,19 @@ public class Taro {
                 System.out.println("Got it. I've added this task:");
                 System.out.println("  " + t);
                 System.out.println("Now you have " + toDoList.size() + " tasks in the list.");
+                System.out.println(LINE);
+            } else if (input.startsWith("deadline")) {
+                String body = input.length() > 8 ? input.substring(8).trim() : "";
+                int byPos = body.indexOf("/by");
+                String desc = body.substring(0, byPos).trim();
+                String by   = body.substring(byPos + 3).trim(); // after "/by"
+                Task t = new Deadline(desc, by);
+                toDoList.add(t);
+                System.out.println(LINE);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + t);
+                System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
+                System.out.println(LINE);
             }
 
         }
