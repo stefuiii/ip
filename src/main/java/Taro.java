@@ -127,6 +127,8 @@ public class Taro {
                     System.out.println("   " + t);
                     System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                     System.out.println(LINE);
+                } else {
+                    throw new TaroException("Sorry Idk what you are saying......plz follow the input format and try again");
                 }
             } catch (TaroException e) {
                 System.out.println(LINE);
