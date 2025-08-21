@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 public class Taro {
     private static final String Logo =
             "  /^ ^\\\n" +
@@ -19,6 +20,8 @@ public class Taro {
         System.out.println("What I can do for you?");
         System.out.println(LINE);
 
+        ArrayList<String> toDoList = new ArrayList<>();
+
         while (true) {
             String input = sc.nextLine();
 
@@ -27,11 +30,18 @@ public class Taro {
                 System.out.println("Bye. Hope to see you again soon!");
                 System.out.println(LINE);
                 break;
+            } else if (input.equals("list")){
+                System.out.println(LINE);
+                for (int i = 0; i < toDoList.size(); i++) {
+                    System.out.println((i + 1) + ". " + toDoList.get(i));
+                }
+                System.out.println(LINE);
+            } else {
+                System.out.println(LINE);
+                System.out.println(input);
+                System.out.println(LINE);
+                toDoList.add(input);
             }
-
-            System.out.println(LINE);
-            System.out.println(input);
-            System.out.println(LINE);
         }
 
         sc.close();
