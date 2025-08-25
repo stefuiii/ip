@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class Parser {
     public static Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
@@ -9,7 +11,8 @@ public class Parser {
         case "T":
             return new Todo(description, isCurrentTaskDone);
         case "D":
-            return new Deadline(description, parts[3], isCurrentTaskDone);
+            LocalDate byTime = LocalDate.parse(parts[3]);
+            return new Deadline(description, byTime, isCurrentTaskDone);
         case "E":
             String[] period = parts[3].split("-");
             String from = period[0];

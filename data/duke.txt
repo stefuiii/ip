@@ -1,2 +1,2 @@
-E | 0 | project meeting | Mon 2pm-4pm
-E | 1 | project meeting | Mon 2pm-4pm
+T | 0 | read a book
+D | 0 | return a book | 2025-08-27

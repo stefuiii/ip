@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -114,7 +115,8 @@ public class Taro {
                     if (by.isEmpty()) {
                         throw new TaroException("The '/by' part of deadline timing is incomplete. Plz provide a complete timing");
                     }
-                    Task t = new Deadline(desc, by, false);
+                    LocalDate byTime = LocalDate.parse(by);
+                    Task t = new Deadline(desc, byTime, false);
                     toDoList.add(t);
                     System.out.println(LINE);
                     System.out.println(" Got it. I've added this task:");
