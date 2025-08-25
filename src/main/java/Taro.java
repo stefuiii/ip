@@ -21,7 +21,8 @@ public class Taro {
         System.out.println("What I can do for you?");
         System.out.println(LINE);
 
-        ArrayList<Task> toDoList = new ArrayList<>();
+        Storage storage = new Storage("./data/duke.txt");
+        ArrayList<Task> toDoList = storage.load();
 
         while (sc.hasNextLine()) {
             String input = sc.nextLine();
@@ -56,6 +57,7 @@ public class Taro {
                     System.out.println(" Nice! I've marked this task as done:");
                     System.out.println("   " + t);
                     System.out.println(LINE);
+                    storage.save(toDoList);
                     continue;
                 } else {
                     t.markAsUndone();
@@ -63,6 +65,7 @@ public class Taro {
                     System.out.println(" OK, I've marked this task as not done yet:");
                     System.out.println("   " + t);
                     System.out.println(LINE);
+                    storage.save(toDoList);
                     continue;
                 }
             } else if (input.startsWith("delete")) {
@@ -76,6 +79,7 @@ public class Taro {
                 System.out.println("   " + removed);
                 System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                 System.out.println(LINE);
+                storage.save(toDoList);
                 continue;
             }
 
@@ -93,6 +97,7 @@ public class Taro {
                     System.out.println("   " + t);
                     System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                     System.out.println(LINE);
+                    storage.save(toDoList);
                 } else if (input.startsWith("deadline")) {
                     String body = input.length() > 8 ? input.substring(8).trim() : "";
                     if (body.isEmpty()) {
@@ -116,6 +121,7 @@ public class Taro {
                     System.out.println("   " + t);
                     System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                     System.out.println(LINE);
+                    storage.save(toDoList);
                 } else if (input.startsWith("event")) {
                     String body = input.length() > 5 ? input.substring(5).trim() : "";
                     if (body.isEmpty()) {
@@ -144,6 +150,7 @@ public class Taro {
                     System.out.println("   " + t);
                     System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                     System.out.println(LINE);
+                    storage.save(toDoList);
                 } else {
                     throw new TaroException("Sorry Idk what you are saying......plz follow the input format and try again");
                 }
