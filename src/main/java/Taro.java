@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -114,7 +117,8 @@ public class Taro {
                     if (by.isEmpty()) {
                         throw new TaroException("The '/by' part of deadline timing is incomplete. Plz provide a complete timing");
                     }
-                    Task t = new Deadline(desc, by, false);
+                    LocalDate byTime = LocalDate.parse(by);
+                    Task t = new Deadline(desc, byTime, false);
                     toDoList.add(t);
                     System.out.println(LINE);
                     System.out.println(" Got it. I've added this task:");
@@ -142,8 +146,16 @@ public class Taro {
 
                     String desc = body.substring(0, fromPos).trim();
                     String from = body.substring(fromPos + 5, toPos).trim();
+                    System.out.println(from);
                     String to = body.substring(toPos + 3).trim();
-                    Task t = new Event(desc, from, to, false);
+
+                    String[] dateAndTime = from.split(" ", 2);
+                    LocalDate date = LocalDate.parse(dateAndTime[0]); // 2025-08-30
+                    DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("HHmm"); // 4pm -> 16:00
+                    LocalTime start = LocalTime.parse(dateAndTime[1], timeFmt);
+                    LocalTime end   = LocalTime.parse(to.toUpperCase(), timeFmt);
+
+                    Task t = new Event(desc, date, start, end, false);
                     toDoList.add(t);
                     System.out.println(LINE);
                     System.out.println(" Got it. I've added this task:");
