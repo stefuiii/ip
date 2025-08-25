@@ -21,7 +21,8 @@ public class Taro {
         System.out.println("What I can do for you?");
         System.out.println(LINE);
 
-        ArrayList<Task> toDoList = new ArrayList<>();
+        Storage storage = new Storage("./data/duke.txt");
+        ArrayList<Task> toDoList = storage.load();
 
         while (sc.hasNextLine()) {
             String input = sc.nextLine();
@@ -56,6 +57,7 @@ public class Taro {
                     System.out.println(" Nice! I've marked this task as done:");
                     System.out.println("   " + t);
                     System.out.println(LINE);
+                    storage.save(toDoList);
                     continue;
                 } else {
                     t.markAsUndone();
@@ -63,6 +65,7 @@ public class Taro {
                     System.out.println(" OK, I've marked this task as not done yet:");
                     System.out.println("   " + t);
                     System.out.println(LINE);
+                    storage.save(toDoList);
                     continue;
                 }
             } else if (input.startsWith("delete")) {
@@ -76,6 +79,7 @@ public class Taro {
                 System.out.println("   " + removed);
                 System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                 System.out.println(LINE);
+                storage.save(toDoList);
                 continue;
             }
 
@@ -86,13 +90,14 @@ public class Taro {
                     if (desc.isEmpty()) {
                         throw new TaroException("Oops! No description of your todo. Plz re-add your todo with decription!");
                     }
-                    Task t = new Todo(desc);
+                    Task t = new Todo(desc, false);
                     toDoList.add(t);
                     System.out.println(LINE);
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + t);
                     System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                     System.out.println(LINE);
+                    storage.save(toDoList);
                 } else if (input.startsWith("deadline")) {
                     String body = input.length() > 8 ? input.substring(8).trim() : "";
                     if (body.isEmpty()) {
@@ -109,13 +114,14 @@ public class Taro {
                     if (by.isEmpty()) {
                         throw new TaroException("The '/by' part of deadline timing is incomplete. Plz provide a complete timing");
                     }
-                    Task t = new Deadline(desc, by);
+                    Task t = new Deadline(desc, by, false);
                     toDoList.add(t);
                     System.out.println(LINE);
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + t);
                     System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                     System.out.println(LINE);
+                    storage.save(toDoList);
                 } else if (input.startsWith("event")) {
                     String body = input.length() > 5 ? input.substring(5).trim() : "";
                     if (body.isEmpty()) {
@@ -137,13 +143,14 @@ public class Taro {
                     String desc = body.substring(0, fromPos).trim();
                     String from = body.substring(fromPos + 5, toPos).trim();
                     String to = body.substring(toPos + 3).trim();
-                    Task t = new Event(desc, from, to);
+                    Task t = new Event(desc, from, to, false);
                     toDoList.add(t);
                     System.out.println(LINE);
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + t);
                     System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
                     System.out.println(LINE);
+                    storage.save(toDoList);
                 } else {
                     throw new TaroException("Sorry Idk what you are saying......plz follow the input format and try again");
                 }

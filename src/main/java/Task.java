@@ -2,9 +2,9 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task(String description) {
+    public Task(String description, boolean isCurrentTaskDone) {
         this.description = description;
-        this.isDone = false;
+        this.isDone = isCurrentTaskDone ? true : false;
     }
 
     public String getStatusIcon() {
@@ -23,4 +23,6 @@ public class Task {
     public String toString() {
         return String.format("[%s] %s", isDone ? "X" : " ", description);
     }
+
+    public String toFile() { return String.format("| %s | %s", isDone ? "1" : "0", description); }
 }
