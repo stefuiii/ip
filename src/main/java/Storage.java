@@ -1,0 +1,43 @@
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Storage {
+    private String filePath;
+
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public ArrayList<Task> load() {
+        ArrayList<Task> tasks = new ArrayList<>();
+        try {
+            File f = new File(filePath);
+            if (!f.exists()) {
+                f.getParentFile().mkdirs();
+                f.createNewFile();
+                return tasks;
+            }
+        } catch (IOException e){
+            System.out.println("Error loading file: " + e.getMessage());
+        }
+        return tasks;
+    }
+
+
+    public void save(ArrayList<Task> tasks) {
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            for (Task task: tasks) {
+                fileWriter.write(task.toFile() + System.lineSeparator());
+            }
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("Error saving file: " + e.getMessage());
+        }
+    }
+}
