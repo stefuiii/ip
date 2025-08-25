@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Parser {
     public static Task parseTask(String line) {
@@ -14,11 +15,15 @@ public class Parser {
             LocalDate byTime = LocalDate.parse(parts[3]);
             return new Deadline(description, byTime, isCurrentTaskDone);
         case "E":
-            String[] period = parts[3].split("-");
-            String from = period[0];
-            String to = period[1];
-            return new Event(description, from, to, isCurrentTaskDone);
-        default:
+            LocalDate date = LocalDate.parse(parts[3]); // yyyy-MM-dd
+
+            String[] period = parts[4].split("-");
+            LocalTime start = LocalTime.parse(period[0]); // 默认解析 16:00
+            LocalTime end   = LocalTime.parse(period[1]);
+
+            return new Event(description, date, start, end, isCurrentTaskDone);
+
+            default:
             return null;
         }
 
