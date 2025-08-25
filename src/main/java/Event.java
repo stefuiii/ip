@@ -15,6 +15,6 @@ public class Event extends Task{
 
     @Override
     public String toFile() {
-        return "E " + super.toFile() + from + "-" + to;
+        return "E " + super.toFile() + " | " + from + "-" + to;
     }
 }
