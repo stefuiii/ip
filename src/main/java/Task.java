@@ -2,9 +2,9 @@ public class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task(String description) {
+    public Task(String description, boolean isCurrentTaskDone) {
         this.description = description;
-        this.isDone = false;
+        this.isDone = isCurrentTaskDone ? true : false;
     }
 
     public String getStatusIcon() {

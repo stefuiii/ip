@@ -86,7 +86,7 @@ public class Taro {
                     if (desc.isEmpty()) {
                         throw new TaroException("Oops! No description of your todo. Plz re-add your todo with decription!");
                     }
-                    Task t = new Todo(desc);
+                    Task t = new Todo(desc, false);
                     toDoList.add(t);
                     System.out.println(LINE);
                     System.out.println(" Got it. I've added this task:");
@@ -109,7 +109,7 @@ public class Taro {
                     if (by.isEmpty()) {
                         throw new TaroException("The '/by' part of deadline timing is incomplete. Plz provide a complete timing");
                     }
-                    Task t = new Deadline(desc, by);
+                    Task t = new Deadline(desc, by, false);
                     toDoList.add(t);
                     System.out.println(LINE);
                     System.out.println(" Got it. I've added this task:");
@@ -137,7 +137,7 @@ public class Taro {
                     String desc = body.substring(0, fromPos).trim();
                     String from = body.substring(fromPos + 5, toPos).trim();
                     String to = body.substring(toPos + 3).trim();
-                    Task t = new Event(desc, from, to);
+                    Task t = new Event(desc, from, to, false);
                     toDoList.add(t);
                     System.out.println(LINE);
                     System.out.println(" Got it. I've added this task:");
