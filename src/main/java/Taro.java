@@ -23,6 +23,7 @@ public class Taro {
 
         Storage storage = new Storage("./data/duke.txt");
         ArrayList<Task> toDoList = storage.load();
+        System.out.println("Hi");
 
         while (sc.hasNextLine()) {
             String input = sc.nextLine();

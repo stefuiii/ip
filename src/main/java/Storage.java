@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Storage {
     private String filePath;
@@ -21,6 +22,16 @@ public class Storage {
                 f.getParentFile().mkdirs();
                 f.createNewFile();
                 return tasks;
+            } else {
+                Scanner sc = new Scanner(f);
+                while (sc.hasNextLine()) {
+                    String line = sc.nextLine();
+                    Task task = Parser.parseTask(line);
+                    if (task != null) {
+                        tasks.add(task);
+                    }
+                }
+                sc.close();
             }
         } catch (IOException e){
             System.out.println("Error loading file: " + e.getMessage());
