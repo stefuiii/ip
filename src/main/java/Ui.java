@@ -17,9 +17,12 @@ public class Ui {
         return sc.hasNextLine() ? sc.nextLine() : null;
     }
 
-    public void showLine() { System.out.println(LINE); }
-    public void show(String msg) { System.out.println(msg); }
-    public void showError(String msg) { System.out.println("    " + msg); }
+    public void showLine() {
+        System.out.println(LINE);
+    }
+    public void show(String msg) {
+        System.out.println(msg);
+    }
     public void showLoadingError(String msg) {
         System.out.println("[LOAD ERROR] " + msg);
     }
