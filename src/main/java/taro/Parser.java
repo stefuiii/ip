@@ -1,3 +1,11 @@
+package taro;
+
+import taro.command.Command;
+import taro.task.Deadline;
+import taro.task.Event;
+import taro.task.Task;
+import taro.task.Todo;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 

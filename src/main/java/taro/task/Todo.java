@@ -1,3 +1,4 @@
+package taro.task;
 public class Todo extends Task{
     public Todo(String description, boolean isCurrentTaskDone) {
         super(description, isCurrentTaskDone);

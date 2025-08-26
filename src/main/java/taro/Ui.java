@@ -1,3 +1,5 @@
+package taro;
+
 import java.util.Scanner;
 
 public class Ui {

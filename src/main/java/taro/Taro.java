@@ -1,3 +1,7 @@
+package taro;
+
+import taro.command.Command;
+
 public class Taro {
 
     private final Ui ui;
