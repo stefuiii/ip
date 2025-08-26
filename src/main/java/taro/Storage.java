@@ -12,10 +12,25 @@ import java.util.Scanner;
 public class Storage {
     private String filePath;
 
+    /**
+     * Constructs a {@code Storage} object to handle loading and saving tasks from/to a file.
+     *
+     * @param filePath the path to the file used for storing task data
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the storage file.
+     * If the file does not exist, it will be created along with its parent directories,
+     * and an empty task list will be returned.
+     * Each line in the file is parsed into a {@link taro.task.Task} using
+     * {@link Parser#parseTask(String)}.
+     *
+     * @return an {@link ArrayList} of {@link taro.task.Task} objects loaded from the file;
+     *         returns an empty list if the file does not exist or cannot be parsed
+     */
     public ArrayList<Task> load() {
         ArrayList<Task> tasks = new ArrayList<>();
         try {
@@ -42,6 +57,12 @@ public class Storage {
     }
 
 
+    /**
+     * Saves the given list of tasks to the storage file.
+     * The file will be overwritten if it already exists.
+     *
+     * @param tasks the {@link TaskList} containing the tasks to save
+     */
     public void save(TaskList tasks) {
         try {
             FileWriter fileWriter = new FileWriter(filePath);
