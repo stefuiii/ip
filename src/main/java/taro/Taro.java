@@ -9,6 +9,7 @@ public class Taro {
     private TaskList tasks;
 
     public Taro (String filePath) {
+        //Initialize the UI
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         try {

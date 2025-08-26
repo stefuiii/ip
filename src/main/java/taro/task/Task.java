@@ -37,5 +37,6 @@ public class Task {
         return String.format("[%s] %s", isDone ? "X" : " ", description);
     }
 
-    public String toFile() { return String.format("| %s | %s", isDone ? "1" : "0", description); }
+    public String toFile() {
+        return String.format("| %s | %s", isDone ? "1" : "0", description); }
 }
