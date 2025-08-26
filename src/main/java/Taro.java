@@ -26,8 +26,18 @@ public class Taro {
     public void run() {
         Scanner sc = new Scanner(System.in);
 
+        ui.showWelcome();
+
         while (sc.hasNextLine()) {
             String input = sc.nextLine();
+
+            if ("bye".equals(input.trim())) {
+                ui.showLine();
+                ui.show("Bye. Hope to see you again soon!");
+                ui.showLine();
+                break;
+            }
+
             if (input.equals("list")){
                 ui.showLine();
                 this.tasks.list();
@@ -73,88 +83,13 @@ public class Taro {
             }
 
             try {
-                if (input.startsWith("todo")) {
-                    String desc = input.length() > 4 ? input.substring(4).trim() : "";
-                    if (desc.isEmpty()) {
-                        throw new TaroException("Oops! No description of your todo. Plz re-add your todo with decription!");
-                    }
-                    Task t = new Todo(desc, false);
-                    tasks.add(t);
-                    ui.showLine();
-                    System.out.println(" Got it. I've added this task:");
-                    System.out.println("   " + t);
-                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                    ui.showLine();
-                    storage.save(tasks);
-                } else if (input.startsWith("deadline")) {
-                    String body = input.length() > 8 ? input.substring(8).trim() : "";
-                    if (body.isEmpty()) {
-                        throw new TaroException("A deadline needs a description and '/by <when>'.");
-                    }
-
-                    int byPos = body.indexOf("/by");
-                    String desc = body.substring(0, byPos).trim();
-                    String by = body.substring(byPos + 3).trim();
-
-                    if (desc.isEmpty()) {
-                        throw new TaroException("The description of a deadline cannot be empty. ");
-                    }
-                    if (by.isEmpty()) {
-                        throw new TaroException("The '/by' part of deadline timing is incomplete. Plz provide a complete timing");
-                    }
-                    LocalDate byTime = LocalDate.parse(by);
-                    Task t = new Deadline(desc, byTime, false);
-                    tasks.add(t);
-                    ui.showLine();
-                    System.out.println(" Got it. I've added this task:");
-                    System.out.println("   " + t);
-                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                    ui.showLine();
-                    storage.save(tasks);
-                } else if (input.startsWith("event")) {
-                    String body = input.length() > 5 ? input.substring(5).trim() : "";
-                    if (body.isEmpty()) {
-                        throw new TaroException("An event needs a description and '/from <start>' '/to <end>'.");
-                    }
-                    int fromPos = body.indexOf("/from");
-                    int toPos = body.indexOf("/to");
-
-                    if (fromPos == -1) {
-                        throw new TaroException("Missing '/from'. Usage: event <desc> /from <start> /to <end>");
-                    }
-                    if (toPos == -1) {
-                        throw new TaroException("Missing '/to'. Usage: event <desc> /from <start> /to <end>");
-                    }
-                    if (toPos < fromPos) {
-                        throw new TaroException("'/to' must come after '/from'. Usage: event <desc> /from <start> /to <end>");
-                    }
-
-                    String desc = body.substring(0, fromPos).trim();
-                    String from = body.substring(fromPos + 5, toPos).trim();
-                    System.out.println(from);
-                    String to = body.substring(toPos + 3).trim();
-
-                    String[] dateAndTime = from.split(" ", 2);
-                    LocalDate date = LocalDate.parse(dateAndTime[0]); // 2025-08-30
-                    DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("HHmm"); // 4pm -> 16:00
-                    LocalTime start = LocalTime.parse(dateAndTime[1], timeFmt);
-                    LocalTime end   = LocalTime.parse(to.toUpperCase(), timeFmt);
-
-                    Task t = new Event(desc, date, start, end, false);
-                    tasks.add(t);
-                    ui.showLine();
-                    System.out.println(" Got it. I've added this task:");
-                    System.out.println("   " + t);
-                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                    ui.showLine();
-                    storage.save(tasks);
-                } else {
-                    throw new TaroException("Sorry Idk what you are saying......plz follow the input format and try again");
-                }
+                Task t = Parser.parseCommand(input);
+                tasks.add(t);
+                storage.save(tasks);
+                System.out.println("Got it. I've added this task:");
+                System.out.println("   " + t);
             } catch (TaroException e) {
-                ui.showLine();
                 System.out.println("    " + e.getMessage());
-                ui.showLine();
             }
         }
     }
