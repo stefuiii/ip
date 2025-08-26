@@ -10,6 +10,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Parser {
+    /**
+     * Parses a line of text from the storage file and reconstructs the corresponding {@code Task} object.
+     * The input line must follow the format used when saving tasks to file, i.e. fields separated by {@code " | "}.
+     * @param line the raw text line from the data file
+     * @return the corresponding {@link Todo}, {@link Deadline}, or {@link Event} object;
+     *         {@code null} if the task type is unrecognized
+     * @throws java.time.format.DateTimeParseException if the date/time fields cannot be parsed
+     * @throws ArrayIndexOutOfBoundsException if the input line does not contain the expected number of fields
+     */
     public static Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
         String taskType = parts[0];
@@ -37,13 +46,33 @@ public class Parser {
 
     }
 
+    /**
+     * Parses a user input string into a corresponding {@link Command} object that can be executed
+     * on a {@link taro.TaskList}.
+     *
+     * Supported commands and their formats:
+     *   {@code bye} &mdash; exits the program
+     *   {@code list} &mdash; lists all tasks
+     *   {@code mark <index>} &mdash; marks the task at the given index as done
+     *   {@code unmark <index>} &mdash; marks the task at the given index as not done
+     *   {@code delete <index>} &mdash; deletes the task at the given index
+     *   {@code todo <description>} &mdash; adds a new {@code Todo}</li>
+     *   {@code deadline <description> /by <yyyy-mm-dd>} &mdash; adds a new {@code Deadline}
+     *   {@code event <description> /from <yyyy-mm-dd HH:mm> /to <HH:mm>} &mdash; adds a new {@code Event}
+     *   {@code find <keyword>} &mdash; searches tasks by keyword in their string representation
+     *
+     *
+     * @param input the raw user input string
+     * @return a {@link Command} object encapsulating the action to be executed
+     * @throws TaroException if the input is invalid, missing arguments, or the command type is unknown
+     */
     public static Command parseCommand(String input) throws TaroException {
         input = input.trim();
 
         if (input.equals("bye")) {
             return (tasks, ui, storage) -> {
                 ui.showLine();
-                ui.show("Bye. Hope to see you again soon!");
+                ui.showBye();
                 ui.showLine();
                 return true;
             };
