@@ -5,47 +5,33 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Taro {
-    private static final String Logo =
-            "  /^ ^\\\n" +
-                    " / 0 0 \\\n" +
-                    " V\\ ^ /V\n" +
-                    "  / - \\\n" +
-                    " |    \\\n" +
-                    " || (__V";
     private static final String LINE =
             "____________________________________________________________";
 
-    public static void main(String[] args) {
-        //Input from user
+    private final Ui ui;
+    private Storage storage;
+    private TaskList tasks;
+
+    public Taro (String filePath) {
+        this.ui = new Ui();
+        this.storage = new Storage(filePath);
+        try {
+            this.tasks = new TaskList(storage.load());
+        } catch (Exception e) {
+            ui.showLoadingError(e.getMessage());
+            this.tasks = new TaskList();
+        }
+    }
+
+    public void run() {
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("Hello! I'm Taro.");
-        System.out.println(Logo);
-        System.out.println("What I can do for you?");
-        System.out.println(LINE);
-
-        Storage storage = new Storage("./data/duke.txt");
-        ArrayList<Task> toDoList = storage.load();
 
         while (sc.hasNextLine()) {
             String input = sc.nextLine();
-
-            // input 'bye' to exit
-            if ("bye".equals(input.trim())) {
-                System.out.println(LINE);
-                System.out.println("Bye. Hope to see you again soon!");
-                System.out.println(LINE);
-                break;
-            }
-
-            // input 'list' to list down all tasks
             if (input.equals("list")){
-                System.out.println(LINE);
-                System.out.println("  Here are tasks in your list:");
-                for (int i = 0; i < toDoList.size(); i++) {
-                    System.out.println("  " + (i + 1) + ". " + toDoList.get(i));
-                }
-                System.out.println(LINE);
+                ui.showLine();
+                this.tasks.list();
+                ui.showLine();
                 continue;
             }
 
@@ -53,39 +39,38 @@ public class Taro {
                 // input mark/unmark as a specific format to change status of task
                 String[] parts = input.split("\\s+");
                 int idx = Integer.parseInt(parts[1]); // 1-based
-                Task t = toDoList.get(idx - 1);
+                Task t = tasks.get(idx - 1);
                 if (input.startsWith("mark ")) {
                     t.markAsDone();
-                    System.out.println(LINE);
-                    System.out.println(" Nice! I've marked this task as done:");
-                    System.out.println("   " + t);
-                    System.out.println(LINE);
-                    storage.save(toDoList);
+                    ui.showLine();
+                    ui.show(" Nice! I've marked this task as done:");
+                    ui.show("   " + t);
+                    ui.showLine();
+                    storage.save(tasks);
                     continue;
                 } else {
                     t.markAsUndone();
-                    System.out.println(LINE);
-                    System.out.println(" OK, I've marked this task as not done yet:");
-                    System.out.println("   " + t);
-                    System.out.println(LINE);
-                    storage.save(toDoList);
+                    ui.showLine();
+                    ui.show(" OK, I've marked this task as not done yet:");
+                    ui.show("   " + t);
+                    ui.showLine();
+                    storage.save(tasks);
                     continue;
                 }
             } else if (input.startsWith("delete")) {
                 String[] parts = input.split("\\s+");
                 int idx = Integer.parseInt(parts[1]); // 1-based
 
-                Task removed = toDoList.remove(idx - 1);
+                Task removed = tasks.delete(idx);
 
                 System.out.println(LINE);
                 System.out.println(" Noted. I've removed this task:");
                 System.out.println("   " + removed);
-                System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
+                System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                 System.out.println(LINE);
-                storage.save(toDoList);
+                storage.save(tasks);
                 continue;
             }
-
 
             try {
                 if (input.startsWith("todo")) {
@@ -94,13 +79,13 @@ public class Taro {
                         throw new TaroException("Oops! No description of your todo. Plz re-add your todo with decription!");
                     }
                     Task t = new Todo(desc, false);
-                    toDoList.add(t);
-                    System.out.println(LINE);
+                    tasks.add(t);
+                    ui.showLine();
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + t);
-                    System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
-                    System.out.println(LINE);
-                    storage.save(toDoList);
+                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                    ui.showLine();
+                    storage.save(tasks);
                 } else if (input.startsWith("deadline")) {
                     String body = input.length() > 8 ? input.substring(8).trim() : "";
                     if (body.isEmpty()) {
@@ -119,13 +104,13 @@ public class Taro {
                     }
                     LocalDate byTime = LocalDate.parse(by);
                     Task t = new Deadline(desc, byTime, false);
-                    toDoList.add(t);
-                    System.out.println(LINE);
+                    tasks.add(t);
+                    ui.showLine();
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + t);
-                    System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
-                    System.out.println(LINE);
-                    storage.save(toDoList);
+                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                    ui.showLine();
+                    storage.save(tasks);
                 } else if (input.startsWith("event")) {
                     String body = input.length() > 5 ? input.substring(5).trim() : "";
                     if (body.isEmpty()) {
@@ -156,24 +141,26 @@ public class Taro {
                     LocalTime end   = LocalTime.parse(to.toUpperCase(), timeFmt);
 
                     Task t = new Event(desc, date, start, end, false);
-                    toDoList.add(t);
-                    System.out.println(LINE);
+                    tasks.add(t);
+                    ui.showLine();
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + t);
-                    System.out.println(" Now you have " + toDoList.size() + " tasks in the list.");
-                    System.out.println(LINE);
-                    storage.save(toDoList);
+                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                    ui.showLine();
+                    storage.save(tasks);
                 } else {
                     throw new TaroException("Sorry Idk what you are saying......plz follow the input format and try again");
                 }
             } catch (TaroException e) {
-                System.out.println(LINE);
+                ui.showLine();
                 System.out.println("    " + e.getMessage());
-                System.out.println(LINE);
+                ui.showLine();
             }
-
         }
+    }
 
-        sc.close();
+    public static void main(String[] args) {
+        //Input from user
+        new Taro("data/duke.txt").run();
     }
 }

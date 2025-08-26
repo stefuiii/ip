@@ -40,11 +40,11 @@ public class Storage {
     }
 
 
-    public void save(ArrayList<Task> tasks) {
+    public void save(TaskList tasks) {
         try {
             FileWriter fileWriter = new FileWriter(filePath);
-            for (Task task: tasks) {
-                fileWriter.write(task.toFile() + System.lineSeparator());
+            for (int i = 0; i < tasks.size(); i++) {
+                fileWriter.write(tasks.get(i).toFile() + System.lineSeparator());
             }
             fileWriter.close();
         } catch (IOException e) {
