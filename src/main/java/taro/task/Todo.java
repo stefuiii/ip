@@ -1,5 +1,12 @@
 package taro.task;
-public class Todo extends Task{
+
+/**
+ * Represents a simple to-do task without any specific date or time constraints.
+ * A {@code Todo} is the most basic type of {@link Task}, consisting only
+ * of a description and a completion status (done or not done).
+ * Example: {@code todo read book}
+ */
+public class Todo extends Task {
     /**
      * Constructs a {@code Todo} task with the given description and completion status.
      *

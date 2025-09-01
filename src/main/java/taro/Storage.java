@@ -1,14 +1,19 @@
 package taro;
 
-import taro.task.Task;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import taro.task.Task;
+
+/**
+ * The {@code Storage} class is responsible for reading task data from a
+ * file and writing task data back to the file. The data is typically
+ * stored in a plain text format and used to reconstruct the list of tasks
+ * when the program starts.
+ */
 public class Storage {
     private String filePath;
 
@@ -50,7 +55,7 @@ public class Storage {
                 }
                 sc.close();
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Error loading file: " + e.getMessage());
         }
         return tasks;

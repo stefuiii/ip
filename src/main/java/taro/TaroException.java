@@ -1,5 +1,9 @@
 package taro;
-public class TaroException extends Exception{
+
+/**
+ * This is the class to categorize specific exceptions.
+ */
+public class TaroException extends Exception {
     public TaroException(String message) {
         super(message);
     }

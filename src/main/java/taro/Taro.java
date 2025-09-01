@@ -2,13 +2,31 @@ package taro;
 
 import taro.command.Command;
 
+/**
+ * The main entry point of the Taro application.
+ * <p>
+ * The {@code Taro} class is responsible for initializing the core components
+ * ({@link Ui}, {@link Storage}, and {@link TaskList}), and running the
+ * main program loop that repeatedly reads user input, parses it into
+ * {@link Command} objects via the {@link Parser}, and executes them.
+ * </p>
+ *
+ * <p>It also handles errors thrown during command execution and displays
+ * appropriate error messages to the user.</p>
+ */
 public class Taro {
 
     private final Ui ui;
     private Storage storage;
     private TaskList tasks;
 
-    public Taro (String filePath) {
+    /**
+     * Constructs a new {@code Taro} instance using the specified file path
+     * to initialize the {@link Storage}.
+     *
+     * @param filePath the path to the file where tasks are loaded from and saved to
+     */
+    public Taro(String filePath) {
         //Initialize the UI
         this.ui = new Ui();
         this.storage = new Storage(filePath);
@@ -20,6 +38,13 @@ public class Taro {
         }
     }
 
+    /**
+     * Starts the main loop of the application.
+     *
+     * The loop will continuously read user commands via {@link Ui},
+     * parse them using {@link Parser}, and execute them as {@link Command}s
+     * until an exit command (e.g., {@code bye}) is issued.
+     */
     public void run() {
 
         ui.showWelcome();

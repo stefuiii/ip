@@ -1,4 +1,8 @@
 package taro.task;
+
+/**
+ * Parent class of all managable tasks
+ */
 public class Task {
     protected String description;
     protected boolean isDone;

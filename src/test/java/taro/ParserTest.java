@@ -1,13 +1,14 @@
 package taro;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Test;
+
+import taro.command.Command;
+import taro.task.Deadline;
 import taro.task.Task;
 import taro.task.Todo;
-import taro.task.Deadline;
-import taro.command.Command;
-
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
     static class TestUi extends Ui {
@@ -32,7 +33,7 @@ public class ParserTest {
 
 
     @Test
-    public void parseTask_deadline_load_from_file_correct() {
+    public void parseTask_deadlineCorrect() {
         String line = "D | 0 | return book | 2025-08-30";
         Task t = Parser.parseTask(line);
         assertTrue(t instanceof Deadline);

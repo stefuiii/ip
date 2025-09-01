@@ -1,12 +1,12 @@
 package taro.task;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class TaskTest {
     @Test
-    public void markAsDone_and_toString_reflectsChange() {
+    public void markAsDone_toString_reflectsChange() {
         Task t = new Task("read book", false);
         assertEquals("[ ] read book", t.toString());
         t.markAsDone();

@@ -1,9 +1,13 @@
 package taro;
 
-import taro.task.Task;
-
 import java.util.ArrayList;
 
+import taro.task.Task;
+
+/**
+ * Represents a list of tasks in the Taro application.
+ * Supports operations to add, remove, and manage tasks.
+ */
 public class TaskList {
     private ArrayList<Task> tasks;
 

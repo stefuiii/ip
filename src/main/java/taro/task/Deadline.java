@@ -3,7 +3,14 @@ package taro.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Deadline extends Task{
+/**
+ * Represents a task with a deadline by which it should be completed.
+ * A {@code Deadline} is a type of {@link Task} that has a description
+ * and a specific due date. It can be marked as done or not done like
+ * other tasks.
+ * Example: {@code deadline return book /by 2025-09-10}
+ */
+public class Deadline extends Task {
     protected LocalDate by;
 
     /**

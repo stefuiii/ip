@@ -3,7 +3,15 @@ package taro.task;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-public class Event extends Task{
+
+/**
+ * Represents an event task that occurs on a specific date and within a specific time period.
+ * An {@code Event} is a type of {@link Task} that has a description,
+ * a date, a start time, and an end time. It can also be marked as done
+ * or not done like other tasks.
+ * Example: {@code event project meeting /from 2025-09-01 14:00 /to 16:00}
+ */
+public class Event extends Task {
     private LocalDate date;
     private LocalTime from;
     private LocalTime to;
@@ -37,6 +45,6 @@ public class Event extends Task{
 
     @Override
     public String toFile() {
-        return "E " + super.toFile() + " | " + date + " | "+ from + "-" + to;
+        return "E " + super.toFile() + " | " + date + " | " + from + "-" + to;
     }
 }

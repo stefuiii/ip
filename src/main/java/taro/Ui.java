@@ -2,12 +2,15 @@ package taro;
 
 import java.util.Scanner;
 
+/**
+ * This is the class for UI
+ * All interactions and display would be handled here.
+ */
 public class Ui {
-    private final Scanner sc = new Scanner(System.in);
     private static final String LINE = "____________________________________________________________";
     private static final String LOGO =
             "  /^ ^\\\n / 0 0 \\\n V\\ ^ /V\n  / - \\\n |    \\\n || (__V";
-
+    private final Scanner sc = new Scanner(System.in);
     /**
      * Displays the welcome message and logo when the program starts.
      */
