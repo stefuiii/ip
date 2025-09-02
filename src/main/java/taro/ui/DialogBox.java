@@ -1,7 +1,11 @@
 package taro.ui;
 
+import java.io.IOException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -10,65 +14,51 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 /**
- * The {@code DialogBox} class represents a custom JavaFX control
- * for displaying a single dialog entry consisting of text and an image.
- * <p>
- * It is used to differentiate between the user's input messages and
- * Taro's responses by flipping the alignment of the components.
+ * The {@code DialogBox} class is a custom control backed by FXML.
+ * It displays a message with an image, aligned differently for
+ * user input vs. Taro's responses.
  */
 public class DialogBox extends HBox {
+    @FXML
     private Label text;
+    @FXML
     private ImageView displayPicture;
 
-    /**
-     * Constructs a {@code DialogBox} with the given message text and image.
-     *
-     * @param message the text to display inside the dialog box
-     * @param img the image to display alongside the text
-     */
-    public DialogBox(String message, Image img) {
-        text = new Label(message);
-        displayPicture = new ImageView(img);
-
-        displayPicture.setFitWidth(50.0);
-        displayPicture.setFitHeight(50.0);
-
-        this.setAlignment(Pos.TOP_RIGHT);
-        this.getChildren().addAll(text, displayPicture);
+    private DialogBox(String message, Image img) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/DialogBox.fxml"));
+            fxmlLoader.setController(this);
+            fxmlLoader.setRoot(this);
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        text.setText(message);
+        displayPicture.setImage(img);
     }
 
     /**
-     * Flips the dialog box such that the {@link ImageView} is placed on the left
-     * and the text is placed on the right, used for differentiating Taro's dialog.
+     * Flips the dialog box so the image is on the left and text on the right.
      */
     private void flip() {
-        this.setAlignment(Pos.TOP_LEFT);
-        ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
+        setAlignment(Pos.TOP_LEFT);
+        ObservableList<Node> tmp = FXCollections.observableArrayList(getChildren());
         FXCollections.reverse(tmp);
-        this.getChildren().setAll(tmp);
+        getChildren().setAll(tmp);
     }
 
     /**
-     * Creates a dialog box styled for user messages.
-     *
-     * @param s the text message from the user
-     * @param i the image to represent the user
-     * @return a {@code DialogBox} aligned to the right
+     * Factory method for user messages.
      */
-    public static DialogBox getUserDialog(String s, Image i) {
-        return new DialogBox(s, i);
+    public static DialogBox getUserDialog(String message, Image img) {
+        return new DialogBox(message, img);
     }
 
     /**
-     * Creates a dialog box styled for Taro's responses.
-     * The box is flipped so that the image appears on the left.
-     *
-     * @param s the response text from Taro
-     * @param i the image to represent Taro
-     * @return a {@code DialogBox} aligned to the left
+     * Factory method for Taro responses.
      */
-    public static DialogBox getDukeDialog(String s, Image i) {
-        var db = new DialogBox(s, i);
+    public static DialogBox getDukeDialog(String message, Image img) {
+        var db = new DialogBox(message, img);
         db.flip();
         return db;
     }
