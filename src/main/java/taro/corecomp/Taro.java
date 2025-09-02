@@ -1,4 +1,4 @@
-package taro;
+package taro.corecomp;
 
 import taro.command.Command;
 import taro.ui.Ui;

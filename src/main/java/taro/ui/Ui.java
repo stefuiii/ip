@@ -1,4 +1,4 @@
-package taro;
+package taro.ui;
 
 import java.util.Scanner;
 
@@ -21,10 +21,22 @@ public class Ui {
                 + "What can I do for you?";
     }
 
+    /**
+     * Appends a message to the internal buffer, followed by a newline.
+     * This allows messages to be accumulated before being displayed or returned.
+     *
+     * @param msg the message to add to the buffer
+     */
     private void addToBuffer(String msg) {
         buffer.append(msg).append("\n");
     }
 
+    /**
+     * Returns the contents of the buffer as a single string
+     * and clears the buffer for future use.
+     *
+     * @return the accumulated messages from the buffer, joined with newlines
+     */
     public String consumeBuffer() {
         String result = buffer.toString();
         buffer.setLength(0); // 清空

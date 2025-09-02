@@ -1,4 +1,4 @@
-package taro;
+package taro.corecomp;
 
 import java.io.File;
 import java.io.FileWriter;

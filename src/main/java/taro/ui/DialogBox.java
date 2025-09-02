@@ -1,4 +1,4 @@
-package taro;
+package taro.ui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

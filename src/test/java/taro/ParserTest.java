@@ -6,9 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import taro.command.Command;
+import taro.corecomp.Parser;
+import taro.corecomp.Storage;
+import taro.corecomp.TaskList;
 import taro.task.Deadline;
 import taro.task.Task;
 import taro.task.Todo;
+import taro.ui.Ui;
 
 public class ParserTest {
     static class TestUi extends Ui {
