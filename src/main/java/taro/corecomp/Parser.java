@@ -81,7 +81,7 @@ public class Parser {
         if (input.equals("list")) {
             return (tasks, ui, storage) -> {
                 ui.showLine();
-                tasks.list();
+                tasks.list(ui);
                 ui.showLine();
                 return false;
             };
