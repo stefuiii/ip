@@ -1,9 +1,9 @@
 package taro.command;
 
-import taro.Storage;
-import taro.TaroException;
-import taro.TaskList;
-import taro.Ui;
+import taro.corecomp.Storage;
+import taro.corecomp.TaroException;
+import taro.corecomp.TaskList;
+import taro.ui.Ui;
 
 /**
  * An interface to identify different types of command

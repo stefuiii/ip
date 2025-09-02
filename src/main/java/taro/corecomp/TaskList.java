@@ -1,8 +1,9 @@
-package taro;
+package taro.corecomp;
 
 import java.util.ArrayList;
 
 import taro.task.Task;
+import taro.ui.Ui;
 
 /**
  * Represents a list of tasks in the Taro application.
@@ -10,7 +11,6 @@ import taro.task.Task;
  */
 public class TaskList {
     private ArrayList<Task> tasks;
-
 
     /**
      * Constructs an empty {@code TaskList}.
@@ -74,10 +74,10 @@ public class TaskList {
      * Prints the tasks in the list to the standard output in a numbered format.
      * Each task is displayed on its own line.
      */
-    public void list() {
-        System.out.println("  Here are tasks in your list:");
+    public void list(Ui ui) {
+        ui.show("  Here are tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("  " + (i + 1) + ". " + tasks.get(i));
+            ui.show("  " + (i + 1) + ". " + tasks.get(i));
         }
     }
 

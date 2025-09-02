@@ -1,4 +1,4 @@
-package taro;
+package taro.corecomp;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -48,7 +48,7 @@ public class Parser {
     }
     /**
      * Parses a user input string into a corresponding {@link Command} object that can be executed
-     * on a {@link taro.TaskList}.
+     * on a {@link TaskList}.
      *
      * Supported commands and their formats:
      *   {@code bye} &mdash; exits the program
@@ -81,7 +81,7 @@ public class Parser {
         if (input.equals("list")) {
             return (tasks, ui, storage) -> {
                 ui.showLine();
-                tasks.list();
+                tasks.list(ui);
                 ui.showLine();
                 return false;
             };

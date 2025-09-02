@@ -1,4 +1,4 @@
-package taro;
+package taro.ui;
 
 import java.util.Scanner;
 
@@ -11,14 +11,36 @@ public class Ui {
     private static final String LOGO =
             "  /^ ^\\\n / 0 0 \\\n V\\ ^ /V\n  / - \\\n |    \\\n || (__V";
     private final Scanner sc = new Scanner(System.in);
+    private final StringBuilder buffer = new StringBuilder();
     /**
      * Displays the welcome message and logo when the program starts.
      */
-    public void showWelcome() {
-        System.out.println("Hello! I'm Taro.");
-        System.out.println(LOGO);
-        System.out.println("What I can do for you?");
-        showLine();
+    public String showWelcome() {
+        return "Hello! I'm Taro\n"
+                + "Your personal assistant bot\n"
+                + "What can I do for you?";
+    }
+
+    /**
+     * Appends a message to the internal buffer, followed by a newline.
+     * This allows messages to be accumulated before being displayed or returned.
+     *
+     * @param msg the message to add to the buffer
+     */
+    private void addToBuffer(String msg) {
+        buffer.append(msg).append("\n");
+    }
+
+    /**
+     * Returns the contents of the buffer as a single string
+     * and clears the buffer for future use.
+     *
+     * @return the accumulated messages from the buffer, joined with newlines
+     */
+    public String consumeBuffer() {
+        String result = buffer.toString();
+        buffer.setLength(0); // 清空
+        return result;
     }
 
     /**
@@ -34,7 +56,6 @@ public class Ui {
      * Prints a dash line used as a divider
      */
     public void showLine() {
-        System.out.println(LINE);
     }
 
     /**
@@ -43,7 +64,7 @@ public class Ui {
      * @param msg the message to display
      */
     public void show(String msg) {
-        System.out.println(msg);
+        addToBuffer(msg);
     }
 
     /**
@@ -52,16 +73,14 @@ public class Ui {
      * @param msg the error details to display
      */
     public void showLoadingError(String msg) {
-        System.out.println("[LOAD ERROR] " + msg);
+        addToBuffer("[LOAD ERROR] " + msg);
     }
 
     /**
      * Displays the farewell message when the program exits.
      */
     public void showBye() {
-        showLine();
-        System.out.println("Bye. Hope to see you again soon!");
-        showLine();
+        addToBuffer("Bye. Hope to see you again soon!");
     }
 
 }
