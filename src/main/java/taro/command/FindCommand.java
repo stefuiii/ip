@@ -7,6 +7,7 @@ import taro.task.Task;
 import taro.ui.Ui;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
@@ -44,9 +45,10 @@ public class FindCommand implements Command {
         if (matchedTasks.isEmpty()) {
             ui.show("  (nothing)");
         } else {
-            for (int i = 0; i < matchedTasks.size(); i++) {
-                ui.show("  " + (i + 1) + ". " + matchedTasks.get(i));
-            }
+            String output = matchedTasks.stream()
+                    .map(Object::toString)
+                    .collect(Collectors.joining("\n  "));
+            ui.show("  " + output);
         }
 
         ui.showLine();

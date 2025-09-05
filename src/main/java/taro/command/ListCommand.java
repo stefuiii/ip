@@ -21,6 +21,7 @@ public class ListCommand implements Command {
         if (tasks.size() == 0) {
             ui.show(" No tasks in your list.");
         } else {
+            ui.show(" Here are the tasks in your list:");
             IntStream.range(0, tasks.size())
                     .mapToObj(i -> (i + 1) + ". " + tasks.get(i))
                     .forEach(ui::show);
