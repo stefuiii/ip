@@ -3,7 +3,16 @@ package taro.corecomp;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import taro.command.ByeCommand;
 import taro.command.Command;
+import taro.command.DeadlineCommand;
+import taro.command.DeleteCommand;
+import taro.command.EventCommand;
+import taro.command.FindCommand;
+import taro.command.ListCommand;
+import taro.command.MarkCommand;
+import taro.command.TodoCommand;
+import taro.command.UnmarkCommand;
 import taro.task.Deadline;
 import taro.task.Event;
 import taro.task.Task;
@@ -70,162 +79,25 @@ public class Parser {
         input = input.trim();
 
         if (input.equals("bye")) {
-            return (tasks, ui, storage) -> {
-                ui.showLine();
-                ui.showBye();
-                ui.showLine();
-                return true;
-            };
+            return new ByeCommand();
+        } else if (input.equals("list")) {
+            return new ListCommand();
+        } else if (input.startsWith("mark ")) {
+           return new MarkCommand(input);
+        } else if (input.startsWith("unmark ")) {
+            return new UnmarkCommand(input);
+        } else if (input.startsWith("delete")) {
+            return new DeleteCommand(input);
+        } else if (input.startsWith("todo")) {
+            return new TodoCommand(input);
+        } else if (input.startsWith("deadline")) {
+            return new DeadlineCommand(input);
+        } else if (input.startsWith("event")) {
+            return new EventCommand(input);
+        } else if (input.startsWith("find ")) {
+            return new FindCommand(input);
+        } else {
+            throw new TaroException("Unknown command: " + input);
         }
-
-        if (input.equals("list")) {
-            return (tasks, ui, storage) -> {
-                ui.showLine();
-                tasks.list(ui);
-                ui.showLine();
-                return false;
-            };
-        }
-
-        if (input.startsWith("mark ") || input.startsWith("unmark ")) {
-            String[] parts = input.split("\\s+");
-            if (parts.length < 2) {
-                throw new TaroException("Usage: mark <index> or unmark <index>");
-            }
-            int idx = Integer.parseInt(parts[1]);
-            boolean isMark = input.startsWith("mark ");
-            return (tasks, ui, storage) -> {
-                if (isMark) {
-                    tasks.get(idx - 1).markAsDone();
-                } else {
-                    tasks.get(idx - 1).markAsUndone();
-                }
-                Task t = tasks.get(idx - 1);
-                ui.showLine();
-                if (isMark) {
-                    ui.show(" Nice! I've marked this task as done:");
-                } else {
-                    ui.show(" OK, I've marked this task as not done yet:");
-                }
-                ui.show("   " + t);
-                ui.showLine();
-                storage.save(tasks);
-                return false;
-            };
-        }
-
-        if (input.startsWith("delete")) {
-            String[] parts = input.split("\\s+");
-            if (parts.length < 2) {
-                throw new TaroException("Usage: delete <index>");
-            }
-            int idx = Integer.parseInt(parts[1]);
-            return (tasks, ui, storage) -> {
-                Task removed = tasks.delete(idx);
-                ui.showLine();
-                ui.show(" Noted. I've removed this task:");
-                ui.show("   " + removed);
-                ui.show(" Now you have " + tasks.size() + " tasks in the list.");
-                ui.showLine();
-                storage.save(tasks);
-                return false;
-            };
-        }
-
-
-        if (input.startsWith("todo")) {
-            String desc = input.substring(4).trim();
-            if (desc.isEmpty()) {
-                throw new TaroException("The description of a todo cannot be empty.");
-            }
-            return (tasks, ui, storage) -> {
-                Task t = new Todo(desc, false);
-                tasks.add(t);
-                storage.save(tasks);
-                ui.showLine();
-                ui.show(" Got it. I've added this task:");
-                ui.show("   " + t);
-                ui.show(" Now you have " + tasks.size() + " tasks in the list.");
-                ui.showLine();
-                return false;
-            };
-        }
-
-        if (input.startsWith("deadline")) {
-            String body = input.substring(8).trim();
-            int byPos = body.indexOf("/by");
-            if (byPos == -1) {
-                throw new TaroException("Missing /by in deadline command.");
-            }
-            String desc = body.substring(0, byPos).trim();
-            String by = body.substring(byPos + 3).trim();
-            LocalDate byTime = LocalDate.parse(by);
-            return (tasks, ui, storage) -> {
-                Task t = new Deadline(desc, byTime, false);
-                tasks.add(t);
-                storage.save(tasks);
-                ui.showLine();
-                ui.show(" Got it. I've added this task:");
-                ui.show("   " + t);
-                ui.show(" Now you have " + tasks.size() + " tasks in the list.");
-                ui.showLine();
-                return false;
-            };
-        }
-
-        if (input.startsWith("event")) {
-            String body = input.substring(5).trim();
-            int fromPos = body.indexOf("/from");
-            int toPos = body.indexOf("/to");
-            if (fromPos == -1 || toPos == -1) {
-                throw new TaroException("Event must have /from and /to.");
-            }
-            String desc = body.substring(0, fromPos).trim();
-            String fromRaw = body.substring(fromPos + 5, toPos).trim();
-            String toRaw = body.substring(toPos + 3).trim();
-
-            String[] dateAndTime = fromRaw.split(" ", 2);
-            LocalDate date = LocalDate.parse(dateAndTime[0]);
-            LocalTime start = LocalTime.parse(dateAndTime[1]);
-            LocalTime end = LocalTime.parse(toRaw);
-
-            return (tasks, ui, storage) -> {
-                Task t = new Event(desc, date, start, end, false);
-                tasks.add(t);
-                storage.save(tasks);
-                ui.showLine();
-                ui.show(" Got it. I've added this task:");
-                ui.show("   " + t);
-                ui.show(" Now you have " + tasks.size() + " tasks in the list.");
-                ui.showLine();
-                return false;
-            };
-        }
-
-        if (input.startsWith("find ")) {
-            String keyword = input.substring(5).trim();
-            if (keyword.isEmpty()) {
-                throw new TaroException("Usage: find <keyword>");
-            }
-            return (tasks, ui, storage) -> {
-                ui.showLine();
-                ui.show("  Here are the matching tasks in your list:");
-                int count = 0;
-                for (int i = 0; i < tasks.size(); i++) {
-                    Task t = tasks.get(i);
-                    if (t.toString().contains(keyword)) {
-                        ui.show("  " + (count + 1) + ". " + t);
-                        count++;
-                    }
-                }
-                if (count == 0) {
-                    ui.show("  (nothing)");
-                }
-                ui.showLine();
-                return false;
-            };
-        }
-
-        throw new TaroException("Unknown command: " + input);
     }
 }
