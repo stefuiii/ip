@@ -15,9 +15,9 @@ import taro.ui.Ui;
  * Example:
  *     deadline submit report /by 2025-09-10
  */
+
 public class DeadlineCommand implements Command {
-    /** The raw user input string containing the deadline command. */
-    private final String input;
+    private String input;
 
     /**
      * Constructs a {@code DeadlineCommand} with the specified input string.
@@ -26,7 +26,6 @@ public class DeadlineCommand implements Command {
     public DeadlineCommand(String input) {
         this.input = input;
     }
-
     /**
      * Executes the {@code deadline} command.
      * Parses the input string, creates a {@link Deadline} task with the given
@@ -57,7 +56,6 @@ public class DeadlineCommand implements Command {
         Task t = new Deadline(desc, byTime, false);
         tasks.add(t);
         storage.save(tasks);
-
         ui.showLine();
         ui.show(" Got it. I've added this task:");
         ui.show("   " + t);

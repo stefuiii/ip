@@ -15,6 +15,9 @@ public class Task {
      *                          {@code false} otherwise
      */
     public Task(String description, boolean isCurrentTaskDone) {
+        // any task must have a description
+        assert description != null && !description.trim().isEmpty()
+                : "Task description should not be null or empty";
         this.description = description;
         this.isDone = isCurrentTaskDone ? true : false;
     }
