@@ -58,6 +58,7 @@ public class Storage {
         } catch (IOException e) {
             System.out.println("Error loading file: " + e.getMessage());
         }
+
         return tasks;
     }
 
@@ -69,6 +70,7 @@ public class Storage {
      * @param tasks the {@link TaskList} containing the tasks to save
      */
     public void save(TaskList tasks) {
+        assert tasks != null : "Tasks to save should not be null";
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             for (int i = 0; i < tasks.size(); i++) {
