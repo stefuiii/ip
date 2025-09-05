@@ -5,8 +5,17 @@ import taro.corecomp.TaroException;
 import taro.corecomp.TaskList;
 import taro.task.Task;
 import taro.ui.Ui;
+
+import java.util.List;
+import java.util.stream.IntStream;
+
+
+/**
+ * Represents the {@code find} command which searches for tasks in the current task list
+ * whose string representation contains the specified keyword.
+ */
 public class FindCommand implements Command {
-    private String input;
+    private final String input;
 
     public FindCommand(String input) {
         this.input = input;
@@ -22,19 +31,24 @@ public class FindCommand implements Command {
         if (keyword.isEmpty()) {
             throw new TaroException("Usage: find <keyword>");
         }
+
         ui.showLine();
         ui.show("  Here are the matching tasks in your list:");
-        int count = 0;
-        for (int i = 0; i < tasks.size(); i++) {
-            Task t = tasks.get(i);
-            if (t.toString().contains(keyword)) {
-                ui.show("  " + (count + 1) + ". " + t);
-                count++;
+
+        // Stream pipeline: filter tasks that match keyword, using the index to get
+        List<Task> matchedTasks = IntStream.range(0, tasks.size())
+                .mapToObj(tasks::get)
+                .filter(t -> t.toString().contains(keyword))
+                .toList();
+
+        if (matchedTasks.isEmpty()) {
+            ui.show("  (nothing)");
+        } else {
+            for (int i = 0; i < matchedTasks.size(); i++) {
+                ui.show("  " + (i + 1) + ". " + matchedTasks.get(i));
             }
         }
-        if (count == 0) {
-            ui.show("  (nothing)");
-        }
+
         ui.showLine();
         return false;
     }
