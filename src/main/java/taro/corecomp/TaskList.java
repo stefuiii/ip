@@ -54,6 +54,7 @@ public class TaskList {
      * @return the same task that was added
      */
     public Task add(Task t) {
+        assert t != null : "Cannot add null task";
         tasks.add(t);
         return t;
     }

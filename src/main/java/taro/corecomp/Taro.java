@@ -81,6 +81,7 @@ public class Taro {
      *         if an error occurs, returns the error message instead
      */
     public String getResponse(String input) {
+        assert input != null; // user's input command cannot be null
         try {
             Command c = Parser.parseCommand(input);
             c.execute(tasks, ui, storage);
