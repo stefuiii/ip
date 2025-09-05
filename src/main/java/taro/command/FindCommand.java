@@ -15,6 +15,10 @@ public class FindCommand implements Command {
 
     @Override
     public boolean execute(TaskList tasks, Ui ui, Storage storage) throws TaroException {
+        assert tasks != null : "TaskList must not be null when executing";
+        assert ui != null : "UI must not be null when executing";
+        assert storage != null : "Storage must not be null when executing";
+
         String keyword = input.substring(5).trim();
         if (keyword.isEmpty()) {
             throw new TaroException("Usage: find <keyword>");

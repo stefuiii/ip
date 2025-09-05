@@ -19,6 +19,10 @@ public class EventCommand implements Command {
 
     @Override
     public boolean execute(TaskList tasks, Ui ui, Storage storage) throws TaroException {
+        assert tasks != null : "TaskList must not be null when executing";
+        assert ui != null : "UI must not be null when executing";
+        assert storage != null : "Storage must not be null when executing";
+
         String body = input.substring(5).trim();
         int fromPos = body.indexOf("/from");
         int toPos = body.indexOf("/to");

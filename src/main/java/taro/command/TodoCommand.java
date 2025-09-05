@@ -15,6 +15,10 @@ public class TodoCommand implements Command {
 
     @Override
     public boolean execute(TaskList tasks, Ui ui, Storage storage) throws TaroException {
+        assert tasks != null : "TaskList must not be null when executing";
+        assert ui != null : "UI must not be null when executing";
+        assert storage != null : "Storage must not be null when executing";
+
         String desc = input.substring(4).trim();
         if (desc.isEmpty()) {
             throw new TaroException("The description of a todo cannot be empty.");

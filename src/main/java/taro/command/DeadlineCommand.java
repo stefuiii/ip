@@ -18,6 +18,10 @@ public class DeadlineCommand implements Command {
 
     @Override
     public boolean execute(TaskList tasks, Ui ui, Storage storage) throws TaroException {
+        assert tasks != null : "TaskList must not be null when executing";
+        assert ui != null : "UI must not be null when executing";
+        assert storage != null : "Storage must not be null when executing";
+
         String body = input.substring(8).trim();
         int byPos = body.indexOf("/by");
         if (byPos == -1) {
