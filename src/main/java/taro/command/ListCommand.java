@@ -4,6 +4,8 @@ import taro.corecomp.Storage;
 import taro.corecomp.TaskList;
 import taro.ui.Ui;
 
+import java.util.stream.IntStream;
+
 /**
  * Represents the {@code list} command which displays all tasks
  * currently stored in the task list.
@@ -29,7 +31,16 @@ public class ListCommand implements Command {
         assert ui != null : "UI must not be null when executing";
         assert storage != null : "Storage must not be null when executing";
 
-        tasks.list(ui);
+        ui.showLine();
+        if (tasks.size() == 0) {
+            ui.show(" No tasks in your list.");
+        } else {
+            ui.show(" Here are the tasks in your list:");
+            IntStream.range(0, tasks.size())
+                    .mapToObj(i -> (i + 1) + ". " + tasks.get(i))
+                    .forEach(ui::show);
+        }
+        ui.showLine();
         return false;
     }
 }
