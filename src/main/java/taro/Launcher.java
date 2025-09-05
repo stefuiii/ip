@@ -1,4 +1,4 @@
-package taro.ui;
+package taro;
 
 import javafx.application.Application;
 import taro.Main;

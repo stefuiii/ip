@@ -84,7 +84,7 @@ public class Taro {
         try {
             Command c = Parser.parseCommand(input);
             c.execute(tasks, ui, storage);
-            return ui.consumeBuffer(); // 返回收集的所有输出
+            return ui.consumeBuffer(); // return what it collects as input
         } catch (TaroException e) {
             return e.getMessage();
         }

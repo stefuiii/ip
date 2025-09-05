@@ -39,7 +39,7 @@ public class Ui {
      */
     public String consumeBuffer() {
         String result = buffer.toString();
-        buffer.setLength(0); // 清空
+        buffer.setLength(0);
         return result;
     }
 
