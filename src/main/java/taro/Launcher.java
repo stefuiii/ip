@@ -1,7 +1,6 @@
 package taro;
 
 import javafx.application.Application;
-import taro.Main;
 
 /**
  * The Launcher is treated as the entrance of the main program)
