@@ -46,6 +46,7 @@ public class ReminderCommand implements Command {
         if (matchedTasks.isEmpty()) {
             ui.show("  (nothing)");
         } else {
+            ui.show("Here is/are all task(s) due in the following 3 days:");
             String output = matchedTasks.stream()
                     .map(Object::toString)
                     .collect(Collectors.joining("\n  "));
