@@ -1,10 +1,10 @@
 package taro.command;
 
+import java.util.stream.IntStream;
+
 import taro.corecomp.Storage;
 import taro.corecomp.TaskList;
 import taro.ui.Ui;
-
-import java.util.stream.IntStream;
 
 /**
  * Represents the {@code list} command which displays all tasks

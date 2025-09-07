@@ -1,14 +1,14 @@
 package taro.command;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import taro.corecomp.Storage;
 import taro.corecomp.TaroException;
 import taro.corecomp.TaskList;
 import taro.task.Task;
 import taro.ui.Ui;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Represents the {@code find} command which searches for tasks in the current task list
