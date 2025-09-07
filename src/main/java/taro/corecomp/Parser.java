@@ -11,6 +11,7 @@ import taro.command.EventCommand;
 import taro.command.FindCommand;
 import taro.command.ListCommand;
 import taro.command.MarkCommand;
+import taro.command.ReminderCommand;
 import taro.command.TodoCommand;
 import taro.command.UnmarkCommand;
 import taro.task.Deadline;
@@ -69,6 +70,7 @@ public class Parser {
      *   {@code deadline <description> /by <yyyy-mm-dd>} &mdash; adds a new {@code Deadline}
      *   {@code event <description> /from <yyyy-mm-dd HH:mm> /to <HH:mm>} &mdash; adds a new {@code Event}
      *   {@code find <keyword>} &mdash; searches tasks by keyword in their string representation
+     *   {@code reminder <keyword>} &mdash; searches tasks due in 3 days
      *
      *
      * @param input the raw user input string
@@ -96,6 +98,8 @@ public class Parser {
             return new EventCommand(input);
         } else if (input.startsWith("find ")) {
             return new FindCommand(input);
+        } else if (input.startsWith("reminder")) {
+            return new ReminderCommand();
         } else {
             throw new TaroException("Unknown command: " + input);
         }

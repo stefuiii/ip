@@ -1,5 +1,7 @@
 package taro.task;
 
+import java.time.LocalDate;
+
 /**
  * Parent class of all managable tasks
  */
@@ -46,4 +48,9 @@ public class Task {
 
     public String toFile() {
         return String.format("| %s | %s", isDone ? "1" : "0", description); }
+
+    public LocalDate getDueDate() {
+        return null;
+    }
+
 }

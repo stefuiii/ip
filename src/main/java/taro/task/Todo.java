@@ -1,5 +1,7 @@
 package taro.task;
 
+import java.time.LocalDate;
+
 /**
  * Represents a simple to-do task without any specific date or time constraints.
  * A {@code Todo} is the most basic type of {@link Task}, consisting only
@@ -26,6 +28,15 @@ public class Todo extends Task {
     @Override
     public String toFile() {
         return "T " + super.toFile();
+    }
+
+    /**
+     * This method is used to extract due date
+     * @return null; since {@code todo} task doesn't have due date
+     */
+    @Override
+    public LocalDate getDueDate() {
+        return null;
     }
 
 }

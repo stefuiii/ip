@@ -32,7 +32,6 @@ public class FindCommand implements Command {
 
     /**
      * Executes the {@code find} command.
-     * <p>
      * Extracts the keyword from the input string, iterates through the {@link TaskList},
      * and displays all tasks that contain the keyword in their string representation.
      * If no tasks match, a message is displayed instead.

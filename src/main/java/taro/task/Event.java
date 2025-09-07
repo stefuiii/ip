@@ -47,4 +47,13 @@ public class Event extends Task {
     public String toFile() {
         return "E " + super.toFile() + " | " + date + " | " + from + "-" + to;
     }
+
+    /**
+     * This method is used to extract due date
+     * @return due date only of an event.
+     */
+    @Override
+    public LocalDate getDueDate() {
+        return this.date;
+    }
 }

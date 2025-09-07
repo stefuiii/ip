@@ -36,4 +36,13 @@ public class Deadline extends Task {
     public String toFile() {
         return "D " + super.toFile() + " | " + by.toString();
     }
+
+    /**
+     * This method is used to extract due date
+     * @return due date only of a deadline task.
+     */
+    @Override
+    public LocalDate getDueDate() {
+        return this.by;
+    }
 }
