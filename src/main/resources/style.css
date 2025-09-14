@@ -20,3 +20,7 @@
     -fx-font-weight: bold;
     -fx-effect: dropshadow( gaussian , rgba(220, 20, 60, 0.5) , 8, 0.2 , 2 , 2 );
 }
+
+.scroll-pane, .scroll-pane > .viewport, .scroll-pane > .content, .vbox {
+    -fx-background-color: transparent;
+}

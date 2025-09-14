@@ -23,7 +23,7 @@ public class MainWindow {
 
     private Taro taro;
 
-    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/images.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/ganadi.png"));
     private final Image taroImage = new Image(this.getClass().getResourceAsStream("/images/images.png"));
 
 
