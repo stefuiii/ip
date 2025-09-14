@@ -48,7 +48,7 @@ public class TodoCommand implements Command {
 
         String desc = input.substring(4).trim();
         if (desc.isEmpty()) {
-            throw new TaroException("The description of a todo cannot be empty.");
+            throw new TaroException("Opps!: The description of a todo cannot be empty.");
         }
 
         Task t = new Todo(desc, false);

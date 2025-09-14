@@ -57,7 +57,7 @@ public class EventCommand implements Command {
         int fromPos = body.indexOf("/from");
         int toPos = body.indexOf("/to");
         if (fromPos == -1 || toPos == -1) {
-            throw new TaroException("Event must have /from and /to.");
+            throw new TaroException("Opps!: Event must have /from and /to.");
         }
         String desc = body.substring(0, fromPos).trim();
         String fromRaw = body.substring(fromPos + 5, toPos).trim();

@@ -1,7 +1,6 @@
 package taro.ui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,8 +17,6 @@ public class MainWindow {
     private VBox dialogContainer;
     @FXML
     private TextField userInput;
-    @FXML
-    private Button sendButton;
 
     private Taro taro;
 
@@ -61,7 +58,7 @@ public class MainWindow {
         );
 
         // Add in Taro dialog box, if correct command, normal display or show in red
-        if (response.startsWith("Unknown")) {
+        if (response.startsWith("Opps!")) {
             dialogContainer.getChildren().add(
                     DialogBox.getErrorDialog(response, taroImage)
             );

@@ -47,7 +47,7 @@ public class DeadlineCommand implements Command {
         String body = input.substring(8).trim();
         int byPos = body.indexOf("/by");
         if (byPos == -1) {
-            throw new TaroException("Missing /by in deadline command.");
+            throw new TaroException("Opps!: Missing /by in deadline command.");
         }
         String desc = body.substring(0, byPos).trim();
         String by = body.substring(byPos + 3).trim();

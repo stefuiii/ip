@@ -50,7 +50,7 @@ public class FindCommand implements Command {
 
         String keyword = input.substring(5).trim();
         if (keyword.isEmpty()) {
-            throw new TaroException("Usage: find <keyword>");
+            throw new TaroException("Opps!: Usage: find <keyword>");
         }
 
         ui.showLine();

@@ -50,7 +50,7 @@ public class MarkCommand implements Command {
 
         String[] parts = input.split("\\s+");
         if (parts.length < 2) {
-            throw new TaroException("Usage: mark <index> or unmark <index>");
+            throw new TaroException("Opps!: Usage: mark <index> or unmark <index>");
         }
         int idx = Integer.parseInt(parts[1]);
 

@@ -80,28 +80,32 @@ public class Parser {
     public static Command parseCommand(String input) throws TaroException {
         input = input.trim();
 
-        if (input.equals("bye")) {
-            return new ByeCommand();
-        } else if (input.equals("list")) {
-            return new ListCommand();
-        } else if (input.startsWith("mark ")) {
-            return new MarkCommand(input);
-        } else if (input.startsWith("unmark ")) {
-            return new UnmarkCommand(input);
-        } else if (input.startsWith("delete")) {
-            return new DeleteCommand(input);
-        } else if (input.startsWith("todo")) {
-            return new TodoCommand(input);
-        } else if (input.startsWith("deadline")) {
-            return new DeadlineCommand(input);
-        } else if (input.startsWith("event")) {
-            return new EventCommand(input);
-        } else if (input.startsWith("find ")) {
-            return new FindCommand(input);
-        } else if (input.startsWith("reminder")) {
-            return new ReminderCommand();
-        } else {
-            throw new TaroException("Unknown command: " + input);
+        try {
+            if (input.equals("bye")) {
+                return new ByeCommand();
+            } else if (input.equals("list")) {
+                return new ListCommand();
+            } else if (input.startsWith("mark")) {
+                return new MarkCommand(input);
+            } else if (input.startsWith("unmark")) {
+                return new UnmarkCommand(input);
+            } else if (input.startsWith("delete")) {
+                return new DeleteCommand(input);
+            } else if (input.startsWith("todo")) {
+                return new TodoCommand(input);
+            } else if (input.startsWith("deadline")) {
+                return new DeadlineCommand(input);
+            } else if (input.startsWith("event")) {
+                return new EventCommand(input);
+            } else if (input.startsWith("find ")) {
+                return new FindCommand(input);
+            } else if (input.startsWith("reminder")) {
+                return new ReminderCommand();
+            } else {
+                throw new TaroException("Opps! Unknown command: " + input);
+            }
+        } catch (TaroException e) {
+            throw e;
         }
     }
 }
