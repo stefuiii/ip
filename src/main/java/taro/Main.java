@@ -28,6 +28,10 @@ public class Main extends Application {
         MainWindow controller = fxmlLoader.getController();
         controller.setTaro(taro);
 
+        scene.getStylesheets().add(
+                getClass().getResource("/style.css").toExternalForm()
+        );
+
         stage.setScene(scene);
         stage.setTitle("Taro");
         stage.show();

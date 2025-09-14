@@ -34,7 +34,7 @@ public class MainWindow {
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         dialogContainer.getChildren().add(
-                DialogBox.getDukeDialog("Hello! I'm Taro\nYour personal assistant bot\n"
+                DialogBox.getTaroDialog("Hello! I'm Taro\nYour personal assistant bot\n"
                         + "What can I do for you?", taroImage)
         );
     }
@@ -55,10 +55,22 @@ public class MainWindow {
         String input = userInput.getText();
         String response = taro.getResponse(input);
 
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, taroImage)
+        // Add in user dialog box
+        dialogContainer.getChildren().add(
+                DialogBox.getUserDialog(input, userImage)
         );
+
+        // Add in Taro dialog box, if correct command, normal display or show in red
+        if (response.startsWith("Unknown")) {
+            dialogContainer.getChildren().add(
+                    DialogBox.getErrorDialog(response, taroImage)
+            );
+        } else {
+            dialogContainer.getChildren().add(
+                    DialogBox.getTaroDialog(response, taroImage)
+            );
+        }
+
         userInput.clear();
     }
 }

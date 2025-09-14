@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -51,15 +52,30 @@ public class DialogBox extends HBox {
      * Factory method for user messages.
      */
     public static DialogBox getUserDialog(String message, Image img) {
-        return new DialogBox(message, img);
+        var db = new DialogBox(message, img);
+        db.text.getStyleClass().add("user-bubble");
+        return db;
     }
 
     /**
      * Factory method for Taro responses.
      */
-    public static DialogBox getDukeDialog(String message, Image img) {
+    public static DialogBox getTaroDialog(String message, Image img) {
         var db = new DialogBox(message, img);
+        db.text.getStyleClass().add("taro-bubble");
         db.flip();
+        HBox.setMargin(db.text, new Insets(0, 0, 0, 10));
+        return db;
+    }
+
+    /**
+     * Factory method for Taro error responses (shown in red).
+     */
+    public static DialogBox getErrorDialog(String message, Image img) {
+        var db = new DialogBox(message, img);
+        db.text.getStyleClass().add("error-bubble");
+        db.flip();
+        HBox.setMargin(db.text, new Insets(0, 0, 0, 10));
         return db;
     }
 }
