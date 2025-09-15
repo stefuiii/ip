@@ -102,7 +102,7 @@ public class Parser {
             } else if (input.startsWith("reminder")) {
                 return new ReminderCommand();
             } else {
-                throw new TaroException("Opps! Unknown command: " + input + "Please retry!");
+                throw new TaroException("Opps! Unknown command: " + input + " Please retry!");
             }
         } catch (TaroException e) {
             throw e;
